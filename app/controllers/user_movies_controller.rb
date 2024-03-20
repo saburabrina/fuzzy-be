@@ -10,11 +10,8 @@ class UserMoviesController < ApplicationController
   end
 
   def create_many
-    user_movies = JSON.parse request.raw_post
-    user_movies.each do |user_movie|
-        _user_movie = UserMovie.new({user_id: current_user['id'], movie_id: user_movie['movie_id'], score: user_movie['score']})
-        return render json: { errors: _user_movie.errors }, status: 500 if !_user_movie.save
-    end
+    user_movies = request.raw_post
+    SubmitManyScoresJob.perform_async(user_movies, current_user.to_json)
   end
 
   def update

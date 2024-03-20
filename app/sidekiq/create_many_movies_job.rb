@@ -2,8 +2,8 @@ class CreateManyMoviesJob
   include Sidekiq::Job
 
   def perform(movies)
-    puts "VO CRIA UM MONTE DE MOVIE LKKKKKKK"
-    puts movies
-    # Do something
+    _movies = JSON.parse movies
+    Movie.create(_movies)
+    puts "Movies Creation on Background"
   end
 end
