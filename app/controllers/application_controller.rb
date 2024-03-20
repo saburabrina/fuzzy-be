@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  skip_before_action :verify_authenticity_token
   helper_method :current_user, :logged_in?
 
   private
@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     unless logged_in?
+        p session[:user_id]
+        puts "not logged in"
       flash[:alert] = "You must be logged in to access this page"
       redirect_to login_path
     end

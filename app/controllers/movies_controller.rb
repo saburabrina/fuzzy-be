@@ -22,6 +22,16 @@ class MoviesController < ApplicationController
     end
   end
 
+  def create_many
+    movies = JSON.parse request.raw_post
+    #movies.each do |movie|
+    #    _movie = Movie.new(movie)
+    #    puts _movie
+    #    render json: {}, status: 500 if !_movie.save
+    #end
+    render json: {}, status: 500 if !Movie.create(movies)
+  end
+
   private
 
   def movie_params
