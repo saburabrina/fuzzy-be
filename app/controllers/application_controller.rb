@@ -14,8 +14,6 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     unless logged_in?
-        p session[:user_id]
-        puts "not logged in"
       flash[:alert] = "You must be logged in to access this page"
       redirect_to login_path
     end
