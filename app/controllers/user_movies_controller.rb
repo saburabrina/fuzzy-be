@@ -11,7 +11,8 @@ class UserMoviesController < ApplicationController
 
   def create_many
     user_movies = request.raw_post
-    SubmitManyScoresJob.perform_async(user_movies, current_user.to_json)
+    job_id = SubmitManyScoresJob.perform_async(user_movies, current_user.to_json)
+    render json: { job_id: job_id }, status: 200
   end
 
   def update
