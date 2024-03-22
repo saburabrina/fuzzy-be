@@ -3,9 +3,12 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @movies.each do |movie|
+      movie.current_user = current_user
+    end
     respond_to do |format|
       format.html
-      format.json { render json: @movies.to_json(methods: :average_score) }
+      format.json { render json: @movies.to_json(methods: [:average_score, :user_score]) }
     end
   end
 
