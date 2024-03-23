@@ -15,7 +15,11 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     unless logged_in?
       flash[:alert] = "You must be logged in to access this page"
-      redirect_to login_path
+
+      respond_to do |format|
+        format.html { redirect_to login_path }
+        format.json { render json: {}, status: 403 }
+      end
     end
   end
 end
