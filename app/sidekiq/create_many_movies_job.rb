@@ -1,5 +1,9 @@
 class CreateManyMoviesJob
   include Sidekiq::Job
+  include Sidekiq::Worker
+  include Sidekiq::Status::Worker
+
+  sidekiq_options retry: false
 
   def perform(movies)
     _movies = JSON.parse movies

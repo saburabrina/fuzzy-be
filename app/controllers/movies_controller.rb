@@ -27,7 +27,8 @@ class MoviesController < ApplicationController
 
   def create_many
     movies = request.raw_post
-    CreateManyMoviesJob.perform_async movies
+    job_id = CreateManyMoviesJob.perform_async movies
+    render json: { job_id: job_id }, status: 200
   end
 
   private

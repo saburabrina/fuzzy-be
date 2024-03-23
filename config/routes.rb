@@ -15,5 +15,7 @@ Rails.application.routes.draw do
   post "/movies/many", to: "movies#create_many"
   post "/user_movies/many", to: "user_movies#create_many"
 
+  get "/jobs/:id/status", to: "jobs#status"
+
   root 'sessions#new'
 end

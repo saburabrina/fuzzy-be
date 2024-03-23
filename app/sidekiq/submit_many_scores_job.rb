@@ -1,5 +1,9 @@
 class SubmitManyScoresJob
     include Sidekiq::Job
+    include Sidekiq::Worker
+    include Sidekiq::Status::Worker
+
+    sidekiq_options retry: false
     
     def perform(user_movies, current_user)
         _user_movies = JSON.parse user_movies
