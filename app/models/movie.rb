@@ -9,8 +9,8 @@ class Movie < ApplicationRecord
   end
 
   def user_score
-    _user_movies = user_movies.find_by(user_id: current_user.id)
-    return nil if !_user_movies
-    return _user_movies[:score]
+    _user_movie = user_movies.find_by(user_id: current_user.id)
+    return nil if !_user_movie
+    return _user_movie[:score]
   end
 end

@@ -6,7 +6,10 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      return
+      respond_to do |format|
+        format.html { redirect_to movies_path }
+        format.json { render json: {}, status: 200 }
+      end
     else
       flash.now[:alert] = "Invalid email or password"
       render :new
@@ -15,6 +18,9 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { render json: {}, status: 200 }
+    end
   end
 end

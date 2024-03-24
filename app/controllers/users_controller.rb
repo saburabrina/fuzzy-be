@@ -7,7 +7,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to movies_path
+      respond_to do |format|
+        format.html { redirect_to movies_path }
+        format.json { render json: {}, status: 200 }
+      end
     else
       render :new
     end
