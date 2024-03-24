@@ -7,7 +7,12 @@ class CreateManyMoviesJob
 
   def perform(movies)
     _movies = JSON.parse movies
-    Movie.create(_movies)
-    puts "Movies Creation on Background"
+
+    Movie.transaction do
+      _movies.each do |movie|
+        new_movie = Movie.new(movie)
+        raise new_movie.errors.messages if !new_movie.save
+      end
+    end
   end
 end
